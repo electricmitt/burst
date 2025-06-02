@@ -1,103 +1,104 @@
-import Image from "next/image";
+"use client";
+
+import WalletAutoConnect from '@/components/web3/WalletAutoConnect';
+import React from 'react';
+
+function FloatingShapes() {
+  // Simple floating shapes using absolute positioning and CSS animation
+  return (
+    <>
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+        <div className="absolute top-10 left-10 w-32 h-32 bg-[var(--color-orange)] opacity-70 rounded-full animate-bounce-slow blur-2xl" />
+        <div className="absolute top-1/2 right-10 w-24 h-24 bg-[var(--color-gold)] opacity-60 rounded-full animate-float" />
+        <div className="absolute bottom-20 left-1/3 w-40 h-40 bg-[var(--color-light-yellow)] opacity-50 rounded-full animate-bounce-fast blur-xl" />
+        <div className="absolute bottom-10 right-1/4 w-28 h-28 bg-[var(--color-gray)] opacity-40 rounded-full animate-float" />
+        <div className="absolute top-1/3 left-1/2 w-16 h-16 bg-[var(--color-dark-brown)] opacity-30 rounded-full animate-bounce-slow" />
+      </div>
+    </>
+  );
+}
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
+    <>
+      <WalletAutoConnect />
+      <FloatingShapes />
+      <div className="flex flex-col items-center justify-center min-h-[70vh] text-center gap-8 relative z-10">
+        <h1 className="text-6xl font-extrabold bg-gradient-to-r from-[var(--color-orange)] to-[var(--color-gold)] bg-clip-text text-transparent drop-shadow-md animate-wiggle">
+          Burst.art
+        </h1>
+        <div className="w-full flex justify-center">
+          <div className="relative w-64 h-6 bg-[var(--color-light-beige)] rounded-full overflow-hidden shadow-inner border-2 border-[var(--color-gold)]">
+            <div className="absolute left-0 top-0 h-full bg-[var(--color-orange)] rounded-full animate-progress-bar" style={{ width: '40%' }} />
+            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xs font-bold text-[var(--color-dark-brown)]">Queue Hype: 40%</span>
+          </div>
+        </div>
+        <p className="max-w-xl text-lg text-[var(--color-dark-brown)]">
+          <span className="font-semibold text-[var(--color-orange)]">Conviction Queue</span> minting for fairness, hype, and FOMO.<br />
+          Create, queue, and mint with a new kind of launch experience.<br />
+          <span className="italic text-[var(--color-gold)]">AI-powered NFT collections.</span>
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 mt-4">
           <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/create"
+            className="px-8 py-3 rounded-lg font-semibold bg-[var(--color-orange)] hover:bg-[var(--color-gold)] text-[var(--color-white)] shadow-md transition-transform hover:scale-105 hover:rotate-1 animate-bounce-fast"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
+            Create Collection
           </a>
           <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/queue"
+            className="px-8 py-3 rounded-lg font-semibold border-2 border-[var(--color-orange)] text-[var(--color-orange)] hover:bg-[var(--color-light-beige)] transition-transform hover:scale-105 animate-float"
           >
-            Read our docs
+            View Conviction Queue
           </a>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        <div className="mt-10 max-w-2xl text-[var(--color-gray)] text-sm">
+          <p>
+            <span className="font-bold text-[var(--color-gold)]">How it works:</span> <br />
+            1. Generate or upload your NFT collection with AI.<br />
+            2. Enter the Conviction Queue to build hype.<br />
+            3. When the threshold is met, a private mint window opens for queued users.<br />
+            4. Public mint and secondary trading follow.
+          </p>
+        </div>
+      </div>
+      <style jsx global>{`
+        @keyframes bounce-slow {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-30px); }
+        }
+        .animate-bounce-slow {
+          animation: bounce-slow 4s infinite;
+        }
+        @keyframes bounce-fast {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-15px); }
+        }
+        .animate-bounce-fast {
+          animation: bounce-fast 2s infinite;
+        }
+        @keyframes float {
+          0%, 100% { transform: translateY(0) scale(1); }
+          50% { transform: translateY(20px) scale(1.05); }
+        }
+        .animate-float {
+          animation: float 5s ease-in-out infinite;
+        }
+        @keyframes wiggle {
+          0%, 100% { transform: rotate(-2deg); }
+          50% { transform: rotate(2deg); }
+        }
+        .animate-wiggle {
+          animation: wiggle 2s infinite;
+        }
+        @keyframes progress-bar {
+          0% { width: 0; }
+          100% { width: 40%; }
+        }
+        .animate-progress-bar {
+          animation: progress-bar 2s cubic-bezier(0.4,0,0.2,1) forwards;
+        }
+      `}</style>
+    </>
   );
 }
