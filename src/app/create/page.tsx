@@ -1,101 +1,108 @@
 "use client";
 
-import React, { useState } from 'react';
-import { useWallet } from '@solana/wallet-adapter-react';
-import { useWalletModal } from '@solana/wallet-adapter-react-ui';
+import React, { useEffect, useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+
+interface Collection {
+  id: string;
+  name: string;
+  image: string;
+  creator: string;
+  created_at: string;
+  description?: string;
+  [key: string]: any;
+}
+
+const mockCollections: Collection[] = [
+  {
+    id: "1",
+    name: "Cyberpunk Cats",
+    image: "/burst-logo.PNG",
+    creator: "0x1234...abcd",
+    created_at: "2024-06-01T12:00:00Z",
+    description: "A collection of neon cyberpunk cats.",
+  },
+  {
+    id: "2",
+    name: "Pixel Punks",
+    image: "/burst-logo.PNG",
+    creator: "0x5678...efgh",
+    created_at: "2024-06-02T15:30:00Z",
+    description: "Retro pixel art punks.",
+  },
+  {
+    id: "3",
+    name: "Space Warriors",
+    image: "/burst-logo.PNG",
+    creator: "0x9abc...def0",
+    created_at: "2024-06-03T09:15:00Z",
+    description: "Intergalactic warriors from distant galaxies.",
+  },
+  {
+    id: "4",
+    name: "Forest Spirits",
+    image: "/burst-logo.PNG",
+    creator: "0x1234...5678",
+    created_at: "2024-06-04T14:20:00Z",
+    description: "Mystical creatures of the enchanted forest.",
+  },
+  // Add more mock collections as needed
+];
 
 export default function CreateCollection() {
-  const { connected } = useWallet();
-  const { setVisible } = useWalletModal();
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [prompt, setPrompt] = useState('');
+  const [collections, setCollections] = useState<Collection[]>([]);
 
-  const handleGenerate = async () => {
-    if (!connected) {
-      setVisible(true);
-      return;
-    }
-    
-    if (!prompt.trim()) return;
-    setIsGenerating(true);
-    // TODO: Implement AI generation
-    setIsGenerating(false);
-  };
+  useEffect(() => {
+    setCollections(mockCollections);
+  }, []);
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <h1 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-[var(--color-orange)] to-[var(--color-gold)] bg-clip-text text-transparent">
-        Create Your Collection
-      </h1>
-
-      <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-        <div className="space-y-6">
-          <div>
-            <label htmlFor="prompt" className="block text-sm font-medium text-[var(--color-dark-brown)] mb-2">
-              Collection Description
-            </label>
-            <textarea
-              id="prompt"
-              rows={4}
-              className="w-full px-4 py-2 border border-[var(--color-gray)] rounded-lg focus:ring-2 focus:ring-[var(--color-orange)] focus:border-transparent"
-              placeholder="Describe your NFT collection... (e.g., 'A collection of cyberpunk cats with neon accessories')"
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-            />
+    <main className="min-h-screen">
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4">Recently Created Collections</h2>
+            <p className="text-xl text-[var(--color-white)]/70 max-w-3xl mx-auto">
+              Discover the latest AI-generated NFT collections from our community
+            </p>
           </div>
-
-          <button
-            onClick={handleGenerate}
-            disabled={isGenerating || !prompt.trim()}
-            className="w-full px-6 py-3 bg-[var(--color-orange)] hover:bg-[var(--color-gold)] text-white rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-            {isGenerating ? 'Generating...' : 'Generate Collection'}
-          </button>
-        </div>
-      </div>
-
-      <div className="bg-white rounded-xl shadow-lg p-6">
-        <h2 className="text-2xl font-bold text-[var(--color-dark-brown)] mb-4">Collection Settings</h2>
-        <div className="space-y-4">
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-[var(--color-dark-brown)] mb-2">
-              Collection Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              className="w-full px-4 py-2 border border-[var(--color-gray)] rounded-lg focus:ring-2 focus:ring-[var(--color-orange)] focus:border-transparent"
-              placeholder="Enter collection name"
-            />
-          </div>
-          <div>
-            <label htmlFor="size" className="block text-sm font-medium text-[var(--color-dark-brown)] mb-2">
-              Collection Size
-            </label>
-            <input
-              type="number"
-              id="size"
-              min="1"
-              max="10000"
-              className="w-full px-4 py-2 border border-[var(--color-gray)] rounded-lg focus:ring-2 focus:ring-[var(--color-orange)] focus:border-transparent"
-              placeholder="Number of NFTs (1-10,000)"
-            />
-          </div>
-          <div>
-            <label htmlFor="price" className="block text-sm font-medium text-[var(--color-dark-brown)] mb-2">
-              Mint Price (SOL)
-            </label>
-            <input
-              type="number"
-              id="price"
-              min="0"
-              step="0.01"
-              className="w-full px-4 py-2 border border-[var(--color-gray)] rounded-lg focus:ring-2 focus:ring-[var(--color-orange)] focus:border-transparent"
-              placeholder="Enter mint price in SOL"
-            />
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            {collections.map((col) => (
+              <TooltipProvider key={col.id}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Card className="group cursor-pointer transition-transform hover:scale-105 overflow-hidden bg-[var(--color-white)]/10 border-[var(--color-white)]/20">
+                      <CardHeader className="p-0">
+                        <img
+                          src={col.image}
+                          alt={col.name}
+                          className="w-full h-48 object-cover object-center bg-[var(--color-white)]"
+                        />
+                      </CardHeader>
+                      <CardContent className="p-4">
+                        <CardTitle className="text-lg mb-1 truncate">{col.name}</CardTitle>
+                        <CardDescription className="text-xs mb-1">By {col.creator}</CardDescription>
+                        <CardDescription className="text-xs">
+                          {new Date(col.created_at).toLocaleDateString()}
+                        </CardDescription>
+                      </CardContent>
+                    </Card>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="max-w-xs">
+                    <div className="space-y-2">
+                      <div className="font-bold text-xl mb-2">{col.name}</div>
+                      <div>{col.description}</div>
+                      <div className="text-xs">Creator: {col.creator}</div>
+                      <div className="text-xs">Created: {new Date(col.created_at).toLocaleString()}</div>
+                    </div>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            ))}
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 } 

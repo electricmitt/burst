@@ -1,18 +1,28 @@
-import React from 'react';
+"use client"
+
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Menu, X } from 'lucide-react';
 import WalletAutoConnect from '@/components/web3/WalletAutoConnect';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { SearchBar } from '@/components/search-bar';
+import { UserProfile } from '@/components/user-profile';
+import { Breadcrumbs } from '@/components/breadcrumbs';
+import { Button } from '@/components/ui/button';
 
 interface MainLayoutProps {
   children: React.ReactNode;
 }
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-[var(--background)] text-[var(--color-white)]">
-      <nav>
+      <nav className="relative">
         <div className="flex h-16 items-center px-4 sm:px-6 lg:px-8">
+          {/* Logo */}
           <div className="flex items-center flex-shrink-0">
             <Link href="/" className="flex items-center gap-2">
               <Image src="/burst-logo.PNG" alt="Burst Logo" width={40} height={40} priority />
@@ -21,21 +31,71 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               </span>
             </Link>
           </div>
-          <div className="flex-1" />
-          <div className="flex items-center space-x-4 flex-shrink-0">
-            <Link href="/create" className="text-[var(--color-white)] hover:text-[var(--color-light-yellow)] px-3 py-2 rounded-md text-sm font-medium">
+
+          {/* Search Bar - Hidden on mobile */}
+          <div className="hidden md:flex flex-1 justify-center px-4">
+            <SearchBar />
+          </div>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-4 flex-shrink-0">
+            <Link href="/create" className="text-[var(--color-white)] hover:text-[var(--color-light-yellow)] px-3 py-2 rounded-md text-sm font-medium transition-colors">
               Mold
             </Link>
-            <Link href="/queue" className="text-[var(--color-white)] hover:text-[var(--color-light-yellow)] px-3 py-2 rounded-md text-sm font-medium">
+            <Link href="/queue" className="text-[var(--color-white)] hover:text-[var(--color-light-yellow)] px-3 py-2 rounded-md text-sm font-medium transition-colors">
               Wick
             </Link>
             <ThemeToggle />
+            <UserProfile />
             <WalletAutoConnect />
           </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden flex items-center space-x-2">
+            <ThemeToggle />
+            <UserProfile />
+            <WalletAutoConnect />
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="text-[var(--color-white)]"
+            >
+              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </Button>
+          </div>
         </div>
+
+        {/* Mobile Search Bar */}
+        <div className="md:hidden px-4 pb-4">
+          <SearchBar />
+        </div>
+
+        {/* Mobile Navigation Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden absolute top-full left-0 right-0 bg-[var(--background)] border-t border-[var(--color-white)]/20 z-50">
+            <div className="px-4 py-2 space-y-1">
+              <Link
+                href="/create"
+                className="block text-[var(--color-white)] hover:text-[var(--color-light-yellow)] px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Mold
+              </Link>
+              <Link
+                href="/queue"
+                className="block text-[var(--color-white)] hover:text-[var(--color-light-yellow)] px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Wick
+              </Link>
+            </div>
+          </div>
+        )}
       </nav>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <Breadcrumbs />
         {children}
       </main>
 
