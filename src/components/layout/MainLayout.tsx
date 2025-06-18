@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import WalletAutoConnect from '@/components/web3/WalletAutoConnect';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -28,6 +29,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             <Link href="/queue" className="text-[var(--color-white)] hover:text-[var(--color-light-yellow)] px-3 py-2 rounded-md text-sm font-medium">
               Wick
             </Link>
+            <ThemeToggle />
             <WalletAutoConnect />
           </div>
         </div>
