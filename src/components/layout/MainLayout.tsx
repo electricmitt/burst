@@ -4,10 +4,9 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
-import WalletAutoConnect from '@/components/web3/WalletAutoConnect';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { SearchBar } from '@/components/search-bar';
-import { UserProfile } from '@/components/user-profile';
+import { WalletGate } from '@/components/web3/WalletGate';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { Button } from '@/components/ui/button';
 
@@ -26,7 +25,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           <div className="flex items-center flex-shrink-0">
             <Link href="/" className="flex items-center gap-2">
               <Image src="/burst-logo.PNG" alt="Burst Logo" width={40} height={40} priority />
-              <span className="text-2xl font-bold text-[var(--color-white)] whitespace-nowrap">
+              <span className="text-2xl font-bold text-foreground whitespace-nowrap">
                 Burst.art
               </span>
             </Link>
@@ -39,27 +38,25 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-4 flex-shrink-0">
-            <Link href="/create" className="text-[var(--color-white)] hover:text-[var(--color-light-yellow)] px-3 py-2 rounded-md text-sm font-medium transition-colors">
+            <Link href="/create" className="text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
               Mold
             </Link>
-            <Link href="/queue" className="text-[var(--color-white)] hover:text-[var(--color-light-yellow)] px-3 py-2 rounded-md text-sm font-medium transition-colors">
+            <Link href="/queue" className="text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
               Wick
             </Link>
             <ThemeToggle />
-            <UserProfile />
-            <WalletAutoConnect />
+            <WalletGate />
           </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center space-x-2">
             <ThemeToggle />
-            <UserProfile />
-            <WalletAutoConnect />
+            <WalletGate />
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-[var(--color-white)]"
+              className="text-foreground"
             >
               {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
@@ -73,18 +70,18 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
         {/* Mobile Navigation Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-[var(--background)] border-t border-[var(--color-white)]/20 z-50">
+          <div className="md:hidden absolute top-full left-0 right-0 bg-background border-t border-border/20 z-50">
             <div className="px-4 py-2 space-y-1">
               <Link
                 href="/create"
-                className="block text-[var(--color-white)] hover:text-[var(--color-light-yellow)] px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                className="block text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Mold
               </Link>
               <Link
                 href="/queue"
-                className="block text-[var(--color-white)] hover:text-[var(--color-light-yellow)] px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                className="block text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Wick
@@ -99,9 +96,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         {children}
       </main>
 
-      <footer className="border-t border-[var(--color-white)]/20">
+      <footer className="border-t border-border/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="text-center text-[var(--color-white)]/80 text-sm">
+          <div className="text-center text-foreground/80 text-sm">
             © {new Date().getFullYear()} Burst.art. All rights reserved.
           </div>
         </div>
